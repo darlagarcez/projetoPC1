@@ -8,10 +8,7 @@ typedef struct usuario
     char ID[4];
     int qtde_de_pontos;
     char senha[20];
-    int produtos[20];
 }Usuario;
 
-void inicializacao_Usuarios();
-void finalizacao_Usuarios();
 
 #endif

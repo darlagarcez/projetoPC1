@@ -1,6 +1,60 @@
 ID: 145
-CPF: 74629563426
+CPF: 87634526511
 Nome: Adriana
 Senha: abobrinha300
-Quantidade de pontos: 50
-14501 14502 14503 14504 14505 
+Quantidade de pontos: 65
+
+ID: 
+CPF: 0
+Nome: 
+Senha: 
+Quantidade de pontos: 0
+
+ID: 
+CPF: 0
+Nome: 
+Senha: 
+Quantidade de pontos: 0
+
+ID: 
+CPF: 0
+Nome: 
+Senha: 
+Quantidade de pontos: 0
+
+ID: 
+CPF: 0
+Nome: 
+Senha: 
+Quantidade de pontos: 0
+
+ID: 
+CPF: 0
+Nome: 
+Senha: 
+Quantidade de pontos: 0
+
+ID: 
+CPF: 0
+Nome: 
+Senha: 
+Quantidade de pontos: 0
+
+ID: 
+CPF: 0
+Nome: 
+Senha: 
+Quantidade de pontos: 0
+
+ID: 
+CPF: 0
+Nome: 
+Senha: 
+Quantidade de pontos: 0
+
+ID: 
+CPF: 0
+Nome: 
+Senha: 
+Quantidade de pontos: 0
+

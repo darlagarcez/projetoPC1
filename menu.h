@@ -3,10 +3,12 @@
 
 #include "usuarios.h"
 
-void inicializacao();
+void limpar_tela();
 
-void menu();
+void inicializacao(Usuario usuarios[]);
 
-void finalizacao();
+void menu_Login(Usuario usuarios[]);
+
+void finalizacao(Usuario usuarios[]);
 
 #endif
