@@ -9,6 +9,7 @@ void inicializacao(Usuario usuarios[]);
 void menu_Login(Usuario usuarios[]);
 void menu_Acoes(Usuario usuarios[]);
 void exibir_Usuarios(Usuario usuarios[]);
+void perfil_Usuario(Usuario usuarios[], int cpf);
 void finalizacao(Usuario usuarios[]);
 
 void limpar_tela()
@@ -41,7 +42,6 @@ void inicializacao(Usuario usuarios[])
     // Passagem de dados do arquivo para o vetor de usuarios
     for (i = 0; i < MAX; i++)
     {
-        printf("%d\n", usuarios[i].CPF);
         fscanf(ponteiro_Arq, "ID: %s\n", usuarios[i].ID);
         fscanf(ponteiro_Arq, "CPF: %d\n", &usuarios[i].CPF);
         fscanf(ponteiro_Arq, "Nome: %s\n", usuarios[i].nome);
@@ -70,6 +70,7 @@ void menu_Login(Usuario usuarios[])
         getchar();
 	    printf("      SENHA: ");
         scanf("%s", SENHA_Login);
+        getchar();
         puts("");
         puts("#####################################");
 
@@ -90,6 +91,7 @@ void menu_Login(Usuario usuarios[])
 
     limpar_tela();
     puts("Login realizado com sucesso!\nBEM VINDO(A)!\n");
+    perfil_Usuario(usuarios, CPF_Login);
     puts("Pressione qualquer tecla para continuar...");
     getchar();
     menu_Acoes(usuarios);
@@ -98,6 +100,7 @@ void menu_Login(Usuario usuarios[])
 void menu_Acoes(Usuario usuarios[])
 {
     int opcao, opcao2;
+    int CPF_usuario;
 
     limpar_tela();
 
@@ -119,6 +122,7 @@ void menu_Acoes(Usuario usuarios[])
         switch (opcao)
         {
         case 1:
+            limpar_tela();
             puts("#####################################");
 	        puts("#                                   #");											   
 	        puts("#            SEBO ONLINE            #");				   
@@ -126,7 +130,6 @@ void menu_Acoes(Usuario usuarios[])
             puts("# EXIBIR USUARIOS:                  #");
 	        puts("# 1 - LISTA DE USUARIOS             #");
 	        puts("# 2 - USUARIO PELO CPF              #");
-	        puts("# 3 - USUARIO PELO NOME             #");
 	        puts("#                                   #");									   
             puts("#####################################");
             printf("Opcao: ");
@@ -139,6 +142,13 @@ void menu_Acoes(Usuario usuarios[])
                 exibir_Usuarios(usuarios);
                 break;
             
+            case 2:
+                limpar_tela();
+                printf("Digite o CPF do usuario: ");
+                scanf("%d", &CPF_usuario);
+                perfil_Usuario(usuarios, CPF_usuario);
+                break;
+
             default:
                 break;
             }
@@ -165,7 +175,28 @@ void exibir_Usuarios(Usuario usuarios[])
             puts("");
             printf("%s\n", usuarios[i].nome);
             puts("");
-            printf("%d\n", usuarios[i].qtde_de_pontos);
+            printf("Quantidade de pontos: %d\n", usuarios[i].qtde_de_pontos);
+            puts("");
+            puts("-------------------------------------");
+            puts("");
+        }
+    }
+    
+}
+
+void perfil_Usuario(Usuario usuarios[], int cpf)
+{
+    int i;
+
+    for (i = 0; i < MAX; i++)
+    {
+        if (usuarios[i].CPF == cpf)
+        {
+            puts("-------------------------------------");
+            puts("");
+            printf("%s\n", usuarios[i].nome);
+            puts("");
+            printf("Quantidade de pontos: %d\n", usuarios[i].qtde_de_pontos);
             puts("");
             puts("-------------------------------------");
             puts("");

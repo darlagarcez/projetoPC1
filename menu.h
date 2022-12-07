@@ -13,6 +13,8 @@ void menu_Acoes(Usuario usuarios[]);
 
 void exibir_Usuarios(Usuario usuarios[]);
 
+void perfil_Usuario(Usuario usuarios[], int cpf);
+
 void finalizacao(Usuario usuarios[]);
 
 #endif
