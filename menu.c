@@ -4,6 +4,13 @@
 #include "usuarios.h"
 #define MAX 10
 
+void limpar_tela();
+void inicializacao(Usuario usuarios[]);
+void menu_Login(Usuario usuarios[]);
+void menu_Acoes(Usuario usuarios[]);
+void exibir_Usuarios(Usuario usuarios[]);
+void finalizacao(Usuario usuarios[]);
+
 void limpar_tela()
 {
     #ifdef __linux__
@@ -23,16 +30,18 @@ void inicializacao(Usuario usuarios[])
     for (i = 0; i < MAX; i++)
     {
         usuarios[i].CPF = 0;
-        strcpy(usuarios[i].nome, "\0");
-        strcpy(usuarios[i].ID, "\0");
+        strcpy(usuarios[i].nome, "0");
+        strcpy(usuarios[i].ID, "0");
         usuarios[i].qtde_de_pontos = 0;
-        strcpy(usuarios[i].senha, "\0");
+        strcpy(usuarios[i].senha, "0");
     }
 
     ponteiro_Arq = fopen("usuarios.txt", "r");
 
+    // Passagem de dados do arquivo para o vetor de usuarios
     for (i = 0; i < MAX; i++)
     {
+        printf("%d\n", usuarios[i].CPF);
         fscanf(ponteiro_Arq, "ID: %s\n", usuarios[i].ID);
         fscanf(ponteiro_Arq, "CPF: %d\n", &usuarios[i].CPF);
         fscanf(ponteiro_Arq, "Nome: %s\n", usuarios[i].nome);
@@ -83,7 +92,7 @@ void menu_Login(Usuario usuarios[])
     puts("Login realizado com sucesso!\nBEM VINDO(A)!\n");
     puts("Pressione qualquer tecla para continuar...");
     getchar();
-    menu_Acoes();
+    menu_Acoes(usuarios);
 }
 
 void menu_Acoes(Usuario usuarios[])
@@ -166,7 +175,7 @@ void exibir_Usuarios(Usuario usuarios[])
 }
 
 void finalizacao(Usuario usuarios[])
-{
+{   
     FILE* ponteiro_Arq;
     int i;
 
