@@ -9,6 +9,10 @@ void inicializacao(Usuario usuarios[]);
 
 void menu_Login(Usuario usuarios[]);
 
+void menu_Acoes(Usuario usuarios[]);
+
+void exibir_Usuarios(Usuario usuarios[]);
+
 void finalizacao(Usuario usuarios[]);
 
 #endif

@@ -85,6 +85,84 @@ void menu_Login(Usuario usuarios[])
     getchar();
 }
 
+void menu_Acoes(Usuario usuarios[])
+{
+    int opcao, opcao2;
+
+    limpar_tela();
+
+    do
+    {
+        puts("#####################################");
+	    puts("#                                   #");											   
+	    puts("#            SEBO ONLINE            #");				   
+	    puts("#                                   #");									   
+        puts("# ESCOLHA UMA ACAO:                 #");
+	    puts("# 1 - EXIBIR USUARIOS               #");
+	    puts("# 2 - EXIBIR PRODUTOS               #");
+	    puts("# 3 - SAIR                          #");
+	    puts("#                                   #");									   
+        puts("#####################################");
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+
+        switch (opcao)
+        {
+        case 1:
+            puts("#####################################");
+	        puts("#                                   #");											   
+	        puts("#            SEBO ONLINE            #");				   
+	        puts("#                                   #");									   
+            puts("# EXIBIR USUARIOS:                  #");
+	        puts("# 1 - LISTA DE USUARIOS             #");
+	        puts("# 2 - USUARIO PELO CPF              #");
+	        puts("# 3 - USUARIO PELO NOME             #");
+	        puts("#                                   #");									   
+            puts("#####################################");
+            printf("Opcao: ");
+            scanf("%d", &opcao2);
+
+            switch (opcao2)
+            {
+            case 1:
+                exibir_Usuarios(usuarios);
+                break;
+            
+            default:
+                break;
+            }
+            break;
+
+        case 2:
+            break;
+
+        default:
+            break;
+        }
+    } while (opcao != 3);
+}
+
+void exibir_Usuarios(Usuario usuarios[])
+{
+    int i;
+
+    for (i = 0; i < MAX; i++)
+    {
+        if (usuarios[i].CPF != 0)
+        {
+            puts("-------------------------------------");
+            puts("");
+            printf("%s\n", usuarios[i].nome);
+            puts("");
+            printf("%d\n", usuarios[i].qtde_de_pontos);
+            puts("");
+            puts("-------------------------------------");
+            puts("");
+        }
+    }
+    
+}
+
 void finalizacao(Usuario usuarios[])
 {
     FILE* ponteiro_Arq;
