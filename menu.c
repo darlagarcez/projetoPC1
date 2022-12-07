@@ -64,7 +64,7 @@ void menu_Login(Usuario usuarios[])
         puts("");
         puts("#####################################");
 
-        for (i = 0; i < MAX || retorno == 0; i++)
+        for (i = 0; i < MAX || retorno != 0; i++)
         {
             if (usuarios[i].CPF == CPF_Login && strcmp(usuarios[i].senha, SENHA_Login) == 0)
             {
@@ -83,6 +83,7 @@ void menu_Login(Usuario usuarios[])
     puts("Login realizado com sucesso!\nBEM VINDO(A)!\n");
     puts("Pressione qualquer tecla para continuar...");
     getchar();
+    menu_Acoes();
 }
 
 void menu_Acoes(Usuario usuarios[])
@@ -125,6 +126,7 @@ void menu_Acoes(Usuario usuarios[])
             switch (opcao2)
             {
             case 1:
+                limpar_tela();
                 exibir_Usuarios(usuarios);
                 break;
             
