@@ -3,6 +3,7 @@
 #include <string.h>
 #include "menu.h"
 #include "usuarios.h"
+#include "produtos.h"
 #define MAX 10
 
 int main()

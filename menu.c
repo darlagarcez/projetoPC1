@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "usuarios.h"
+#include "produtos.h"
 #define MAX 10
 
 void limpar_tela();
@@ -25,31 +26,8 @@ void limpar_tela()
 
 void inicializacao(Usuario usuarios[])
 {
-    FILE* ponteiro_Arq;
-    int i;
-
-    for (i = 0; i < MAX; i++)
-    {
-        usuarios[i].CPF = 0;
-        strcpy(usuarios[i].nome, "0");
-        strcpy(usuarios[i].ID, "0");
-        usuarios[i].qtde_de_pontos = 0;
-        strcpy(usuarios[i].senha, "0");
-    }
-
-    ponteiro_Arq = fopen("usuarios.txt", "r");
-
-    // Passagem de dados do arquivo para o vetor de usuarios
-    for (i = 0; i < MAX; i++)
-    {
-        fscanf(ponteiro_Arq, "ID: %s\n", usuarios[i].ID);
-        fscanf(ponteiro_Arq, "CPF: %d\n", &usuarios[i].CPF);
-        fscanf(ponteiro_Arq, "Nome: %s\n", usuarios[i].nome);
-        fscanf(ponteiro_Arq, "Senha: %s\n", usuarios[i].senha);
-        fscanf(ponteiro_Arq, "Quantidade de pontos: %d\n", &usuarios[i].qtde_de_pontos);
-    }
-
-    fclose(ponteiro_Arq);
+    inicializacao_Usuarios(usuarios);
+    inicializacao_Produtos(usuarios);
 }
 
 void menu_Login(Usuario usuarios[])
@@ -111,9 +89,11 @@ void menu_Acoes(Usuario usuarios[])
 	    puts("#            SEBO ONLINE            #");				   
 	    puts("#                                   #");									   
         puts("# ESCOLHA UMA ACAO:                 #");
-	    puts("# 1 - EXIBIR USUARIOS               #");
-	    puts("# 2 - EXIBIR PRODUTOS               #");
-	    puts("# 3 - SAIR                          #");
+	    puts("# 1 - COMPRAR PRODUTO               #");
+	    puts("# 2 - ADICONAR PRODUTO              #");
+	    puts("# 3 - EXIBIR USUARIOS               #");
+	    puts("# 4 - EXIBIR PRODUTOS               #");
+	    puts("# 5 - SAIR                          #");
 	    puts("#                                   #");									   
         puts("#####################################");
         printf("Opcao: ");
@@ -121,7 +101,7 @@ void menu_Acoes(Usuario usuarios[])
 
         switch (opcao)
         {
-        case 1:
+        case 3:
             limpar_tela();
             puts("#####################################");
 	        puts("#                                   #");											   
@@ -147,9 +127,17 @@ void menu_Acoes(Usuario usuarios[])
                 printf("Digite o CPF do usuario: ");
                 scanf("%d", &CPF_usuario);
                 perfil_Usuario(usuarios, CPF_usuario);
+                getchar();
+                puts("Pressione qualquer tecla para continuar...");
+                getchar();
                 break;
 
             default:
+                limpar_tela();
+                puts("Opcao invalida!");
+                getchar();
+                puts("Pressione qualquer tecla para continuar...");
+                getchar();
                 break;
             }
             break;
@@ -157,15 +145,21 @@ void menu_Acoes(Usuario usuarios[])
         case 2:
             break;
 
+        case 5:
+            limpar_tela();
+            puts("Programa finalizado!");
+            break;
+        
         default:
+            puts("Opcao invalida!\nPor favor, digite novamente:\n");
             break;
         }
-    } while (opcao != 3);
+    } while (opcao != 5);
 }
 
 void exibir_Usuarios(Usuario usuarios[])
 {
-    int i;
+    int i, j;
 
     for (i = 0; i < MAX; i++)
     {
@@ -177,11 +171,22 @@ void exibir_Usuarios(Usuario usuarios[])
             puts("");
             printf("Quantidade de pontos: %d\n", usuarios[i].qtde_de_pontos);
             puts("");
+            puts("Produtos:");
+            for (j = 0; j < 20; j++)
+            {
+                if (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
+                {
+                    printf("%s ", usuarios[i].produtos[j].ID);
+                }
+            }
+            puts("");
             puts("-------------------------------------");
             puts("");
         }
     }
-    
+    getchar();
+    puts("Pressione qualquer tecla para continuar...");
+    getchar();
 }
 
 void perfil_Usuario(Usuario usuarios[], int cpf)
@@ -202,26 +207,10 @@ void perfil_Usuario(Usuario usuarios[], int cpf)
             puts("");
         }
     }
-    
 }
 
 void finalizacao(Usuario usuarios[])
 {   
-    FILE* ponteiro_Arq;
-    int i;
-
-    ponteiro_Arq = fopen("usuarios.txt", "w");
-
-    for (i = 0; i < MAX; i++)
-    {
-        fprintf(ponteiro_Arq, "ID: %s\n", usuarios[i].ID);
-        fprintf(ponteiro_Arq, "CPF: %d\n", usuarios[i].CPF);
-        fprintf(ponteiro_Arq, "Nome: %s\n", usuarios[i].nome);
-        fprintf(ponteiro_Arq, "Senha: %s\n", usuarios[i].senha);
-        fprintf(ponteiro_Arq, "Quantidade de pontos: %d\n", usuarios[i].qtde_de_pontos);
-
-        fputc('\n', ponteiro_Arq);
-    }
-
-    fclose(ponteiro_Arq);
+    finalizacao_Usuarios(usuarios);
+    finalizacao_Produtos(usuarios);
 }
