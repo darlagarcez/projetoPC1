@@ -11,6 +11,7 @@ void menu_Login(Usuario usuarios[]);
 void menu_Acoes(Usuario usuarios[]);
 void exibir_Usuarios(Usuario usuarios[]);
 void perfil_Usuario(Usuario usuarios[], int cpf);
+void exibir_produtos(Usuario usuarios[]);
 void finalizacao(Usuario usuarios[]);
 
 void limpar_tela()
@@ -142,7 +143,10 @@ void menu_Acoes(Usuario usuarios[])
             }
             break;
 
-        case 2:
+        case 4:
+            limpar_tela();
+            exibir_produtos(usuarios);
+            limpar_tela();
             break;
 
         case 5:
@@ -161,25 +165,24 @@ void exibir_Usuarios(Usuario usuarios[])
 {
     int i, j;
 
+    puts("-------------------------------------");
+
     for (i = 0; i < MAX; i++)
     {
         if (usuarios[i].CPF != 0)
         {
-            puts("-------------------------------------");
             puts("");
-            printf("%s\n", usuarios[i].nome);
-            puts("");
-            printf("Quantidade de pontos: %d\n", usuarios[i].qtde_de_pontos);
+            printf("%s%20d\n", usuarios[i].nome, usuarios[i].qtde_de_pontos);
             puts("");
             puts("Produtos:");
             for (j = 0; j < 20; j++)
             {
                 if (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
                 {
-                    printf("%s ", usuarios[i].produtos[j].ID);
+                    printf("%s ", usuarios[i].produtos[j].nome);
                 }
             }
-            puts("");
+            puts("\n");
             puts("-------------------------------------");
             puts("");
         }
@@ -191,7 +194,7 @@ void exibir_Usuarios(Usuario usuarios[])
 
 void perfil_Usuario(Usuario usuarios[], int cpf)
 {
-    int i;
+    int i, j;
 
     for (i = 0; i < MAX; i++)
     {
@@ -199,14 +202,53 @@ void perfil_Usuario(Usuario usuarios[], int cpf)
         {
             puts("-------------------------------------");
             puts("");
-            printf("%s\n", usuarios[i].nome);
+            printf("%s%20d\n", usuarios[i].nome, usuarios[i].qtde_de_pontos);
             puts("");
-            printf("Quantidade de pontos: %d\n", usuarios[i].qtde_de_pontos);
-            puts("");
+            puts("Produtos:");
+            for (j = 0; j < 20; j++)
+            {
+                if (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
+                {
+                    printf("%s ", usuarios[i].produtos[j].nome);
+                }
+            }
+            puts("\n");
             puts("-------------------------------------");
             puts("");
         }
     }
+}
+
+void exibir_produtos(Usuario usuarios[])
+{
+    int i, j;
+
+    puts("-------------------------------------");
+
+    for (i = 0; i < MAX; i++)
+    {
+        if (usuarios[i].CPF != 0)
+        {
+            
+            for (j = 0; j < 20; j++)
+            {
+                if (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
+                {
+                    printf("Titulo: %s\t\t\tPontos: %d\n", usuarios[i].produtos[j].nome,
+                    usuarios[i].produtos[j].qtde_de_pontos);
+                    printf("Autor: %s\t\t\tAno: %d\n", usuarios[i].produtos[j].autor,
+                    usuarios[i].produtos[j].ano);
+                    printf("ID para a compra: %s", usuarios[i].produtos[j].ID);
+                    puts("\n");
+                    puts("-------------------------------------");
+                    puts("");
+                }
+            }
+        }
+    }
+    getchar();
+    puts("Pressione qualquer tecla para continuar...");
+    getchar();
 }
 
 void finalizacao(Usuario usuarios[])

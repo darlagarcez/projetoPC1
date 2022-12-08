@@ -91,30 +91,29 @@ void inicializacao_Produtos(Usuario usuarios[])
         fgets(linha, 500, ponteiro_Arq);
         strncpy(linhaSemPularLinha, linha, strlen(linha) - 1);
 
-        const char virgula[2] = ",";
         char *token;
 
         char id[6], nome[50], autor[50];
         int ano, qtde_de_pontos;
         float nivel_de_qualidade;
 
-        strcpy(id, strtok(linhaSemPularLinha, virgula));
-        strcpy(nome, strtok(NULL, virgula));
-        strcpy(autor, strtok(NULL, virgula));
-        ano = atoi(strtok(NULL, virgula));
-        qtde_de_pontos = atoi(strtok(NULL, virgula));
-        nivel_de_qualidade = atof(strtok(NULL, virgula));
+        strcpy(id, strtok(linhaSemPularLinha, ","));
+        strcpy(nome, strtok(NULL, ","));
+        strcpy(autor, strtok(NULL, ","));
+        ano = atoi(strtok(NULL, ","));
+        qtde_de_pontos = atoi(strtok(NULL, ","));
+        nivel_de_qualidade = atof(strtok(NULL, ","));
 
         char id_usuario[4];
         strncpy(id_usuario, id, 3);
         id_usuario[3] = '\0';
 
-        i = 0;
-        while (i < MAX)
+        for (i = 0; i < MAX; i++)
         {
             if (strcmp(usuarios[i].ID, id_usuario) == 0)
             {
                 j = 0;
+
                 while (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
                     j++;
 
@@ -126,10 +125,9 @@ void inicializacao_Produtos(Usuario usuarios[])
                 usuarios[i].produtos[j].nivel_de_qualidade = nivel_de_qualidade;
                 break;
             }
-            i++;
         }
 
-        free(token);
+        //free(token);
     }
 
     fclose(ponteiro_Arq);
@@ -148,15 +146,22 @@ void finalizacao_Produtos(Usuario usuarios[])
         {
             if (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
             {
-                fprintf(ponteiro_Arq, "ID: %s\n", usuarios[i].produtos[j].ID);
-                fprintf(ponteiro_Arq, "Nome: %s\n", usuarios[i].produtos[j].nome);
-                fprintf(ponteiro_Arq, "Autor(a): %s\n", usuarios[i].produtos[j].autor);
-                fprintf(ponteiro_Arq, "Ano: %d\n", usuarios[i].produtos[j].ano);
-                fprintf(ponteiro_Arq, "Quantidade de pontos: %d\n", usuarios[i].qtde_de_pontos);
-                fprintf(ponteiro_Arq, "Nivel de qualidade: %f\n", usuarios[i].produtos[j].nivel_de_qualidade);
+                if (i == 0 && j == 0)
+                {
+                    fprintf(ponteiro_Arq, "%s,%s,%s,%d,%d,%.1f", usuarios[i].produtos[j].ID, 
+                    usuarios[i].produtos[j].nome, usuarios[i].produtos[j].autor,
+                    usuarios[i].produtos[j].ano, usuarios[i].produtos[j].qtde_de_pontos,
+                    usuarios[i].produtos[j].nivel_de_qualidade);
+                }
+                else
+                {
+                    fprintf(ponteiro_Arq, "\n%s,%s,%s,%d,%d,%.1f", usuarios[i].produtos[j].ID, 
+                    usuarios[i].produtos[j].nome, usuarios[i].produtos[j].autor,
+                    usuarios[i].produtos[j].ano, usuarios[i].produtos[j].qtde_de_pontos,
+                    usuarios[i].produtos[j].nivel_de_qualidade);
+                }
             }
         }
-        fputc('\n', ponteiro_Arq);
     }
 
     fclose(ponteiro_Arq);
