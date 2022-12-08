@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "usuarios.h"
 #include "produtos.h"
+#include "usuarios.h"
 #define MAX 10
 
 void limpar_tela();

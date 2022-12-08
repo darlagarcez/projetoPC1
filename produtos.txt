@@ -1,27 +1,4 @@
-ID: 12301
-Nome: livro 1
-Autor(a): autor 1
-Ano: 2021
-Quantidade de pontos: 40
-Nivel de qualidade: 3.5
-
-ID: 12302
-Nome: livro 2
-Autor(a): autor 2
-Ano: 2019
-Quantidade de pontos: 60
-Nivel de qualidade: 4.5
-
-ID: 14502
-Nome: livro 2
-Autor(a): autor 2
-Ano: 2022
-Quantidade de pontos: 78
-Nivel de qualidade: 4.8
-
-ID: 14503
-Nome: livro 3
-Autor(a): autor 3
-Ano: 2022
-Quantidade de pontos: 55
-Nivel de qualidade: 3.2
+12301,livro 1,autor 1,2021,40,3.5
+12302,livro 2,autor 2,2019,60,4.5
+14502,livro 2,autor 2,2022,78,4.8
+14503,livro 3,autor 3,2022,55,3.2
