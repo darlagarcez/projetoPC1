@@ -41,6 +41,7 @@ int main()
         case 2:
             retorno = 0;
             limpar_tela();
+            adicionar_usuario(usuarios);
             break;
 
         default:

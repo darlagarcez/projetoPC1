@@ -16,11 +16,12 @@ typedef struct usuario
 // Funcoes de usuarios
 void inicializacao_Usuarios(Usuario usuarios[]);
 void finalizacao_Usuarios(Usuario usuarios[]);
+void adicionar_usuario(Usuario usuarios[]);
 
 // Funcoes de produtos do usuario
 void inicializacao_Produtos(Usuario usuarios[]);
 void finalizacao_Produtos(Usuario usuarios[]);
-void adicionar_Produto(int idUsuario);
-void remover_Produto(int idProduto);
+void adicionar_Produto(Usuario usuarios[], int idUsuario);
+void remover_Produto(Usuario usuarios[], int idUsuario, int idProduto);
 
 #endif

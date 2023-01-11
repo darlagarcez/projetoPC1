@@ -2,7 +2,7 @@
 #define PONTOS_H
 
 float questionario();
-float calculo_nivel_qualidade(float notas[], int idade);
+float calculo_nivel_qualidade(float notas[7], int idade);
 int calculo_pontos(float nivel_de_qualidade);
 float nivel_do_dano();
 

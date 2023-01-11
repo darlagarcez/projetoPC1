@@ -4,7 +4,7 @@
 #include "funcoesmatematicas.h"
 
 float questionario();
-float calculo_nivel_qualidade(float notas[], int idade);
+float calculo_nivel_qualidade(float notas[7], int idade);
 int calculo_pontos(float nivel_de_qualidade);
 float nivel_do_dano();
 
@@ -22,7 +22,7 @@ float questionario()
     printf("Quanto meses faz que o usuário comprou o produto? (Valor arrendondado)");
     scanf("%d", idade);
 
-    for (int i = 0, i < 7, i++)
+    for (int i = 0; i < 7; i++)
     {
         printf("%s\n", perguntas_str[i]);
         printf("1 - Sim\t2 - Nao\n");
@@ -53,7 +53,7 @@ float questionario()
 
     nivel_de_qualidade = calculo_nivel_qualidade(perguntas, idade);
 
-    pontos = calculo_pontos(nivel_de_qualidade);
+    return nivel_de_qualidade;
 
 }
 
@@ -82,7 +82,20 @@ float calculo_nivel_qualidade(float notas[7], int idade)
 
 int calculo_pontos(float nivel_de_qualidade)
 {
+    int pontos;
 
+    if (nivel_de_qualidade >= 4.0)
+        pontos = 95;
+    else if (nivel_de_qualidade >= 3.0 && nivel_de_qualidade < 4.0)
+        pontos = 75;
+    else if (nivel_de_qualidade >= 2.0 && nivel_de_qualidade < 3.0)
+        pontos = 50;
+    else if (nivel_de_qualidade >= 1.0 && nivel_de_qualidade < 2.0)
+        pontos = 25;
+    else if (nivel_de_qualidade < 1.0)
+        pontos = 5;
+
+    return pontos;
 }
 
 float nivel_do_dano()
@@ -95,11 +108,11 @@ float nivel_do_dano()
     scanf("%f", opcao);
 
     if (opcao == 1.0)
-        return 4.0
+        return 4.0;
     else if (opcao == 2.0)
-        return 2.5
+        return 2.5;
     else if (opcao == 3.0)
-        return 1.0
+        return 1.0;
     else if (opcao == 4.0 || opcao == 5.0)
-        return 0.5
+        return 0.5;
 }
