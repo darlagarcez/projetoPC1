@@ -10,7 +10,7 @@ int main()
 {
     Usuario usuarios[MAX];
     int opcao;
-    int retorno;
+    int retorno = -1;
 
     limpar_tela();
 
@@ -18,15 +18,14 @@ int main()
 
     do
     {
-        puts("#####################################");
-	    puts("#                                   #");											   
-	    puts("#            SEBO ONLINE            #");				   
-	    puts("#                                   #");									   
-        puts("# ESCOLHA UMA ACAO:                 #");
-	    puts("# 1 - LOGIN                         #");
-	    puts("# 2 - SE CADASTRAR                  #");
-	    puts("#                                   #");									   
-        puts("#####################################");
+        limpar_tela();
+        gotoxy(10,2);
+        puts("ESCOLHA UMA ACAO: ");
+        gotoxy(5,4);
+        puts("1 - Login");
+        gotoxy(5,5);
+        puts("2 - Cadastro");
+        gotoxy(5,7);
         printf("Opcao: ");
         scanf("%d", &opcao);
 
@@ -45,9 +44,11 @@ int main()
             break;
 
         default:
-            retorno = 1;
+            retorno = 1
             limpar_tela();
-            puts("Operacao invalida!\nDigite novamente:\n");
+            gotoxy(10,2);
+            puts("OPCAO INVALIDA!");
+            pausar_tela(5,4);
             break;
         }
     } while (retorno != 0);

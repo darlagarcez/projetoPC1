@@ -18,40 +18,27 @@ int validarcpf(char c_pf[])
     if (strlen(c_pf) == 14)
     {
         if (c_pf[3] != '.' || c_pf[7] != '.' || c_pf[11] != '-')
-        {
             return 1;
-        }
         else
         {
             while (i < 14)
             {
                 if (i == 3 || i == 7 || i == 11)
-                {
                     i++;
-                }
                 else
                 {
                     if (c_pf[i] <= '9' && c_pf[i] >= '0')
-                    {
                         ok == 0;
-                    }
                     else
-                    {
                         return 1;
-                    }
                 }
             }
         }
     }
     else
-    {
         return 1;
-    }
-
     if (ok == 0)
-    {
         return 0;
-    }
 }
 
 float mediap(float notas[],float pesos[], int tam)

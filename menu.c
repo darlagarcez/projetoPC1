@@ -5,7 +5,16 @@
 #include "usuarios.h"
 #define MAX 10
 
+#ifdef _WIN32
+    #include <windows.h>
+#else
+
+#endif
+
 void limpar_tela();
+void limpar_tela();
+void gotoxy(int x,int y);
+void pausar_tela(int x, int y);
 void inicializacao(Usuario usuarios[]);
 void menu_Login(Usuario usuarios[]);
 void menu_Acoes(Usuario usuarios[]);
@@ -25,6 +34,45 @@ void limpar_tela()
     #endif
 }
 
+void limpar_tela()
+{
+    #ifdef __linux__
+        system("clear");
+    #elif _WIN32
+        system("cls");
+    #else
+
+    #endif
+}
+
+void gotoxy(int x,int y)
+{
+    #ifdef __linux__
+        printf("%c[%d;%df",0x1B,y,x);
+    #elif _WIN32
+        COORD coord;
+        coord.X = x;
+        coord.Y = y;
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    #else
+
+    #endif
+}
+
+void pausar_tela(int x, int y)
+{
+    #ifdef __linux__
+        getchar();
+        gotoxy(x,y);
+        printf("Pressione qualquer tecla para continuar...");
+        getchar();
+    #elif _WIN32
+        system("pause");
+    #else
+
+    #endif
+}
+
 void inicializacao(Usuario usuarios[])
 {
     inicializacao_Usuarios(usuarios);
@@ -35,44 +83,46 @@ void menu_Login(Usuario usuarios[])
 {
     int CPF_Login;
     char SENHA_Login[20];
-    int i;
     int retorno = 1;
 
     do
     {
-        puts("#####################################");
-	    puts("");											   
-	    puts("               LOGIN");				   
-	    puts("");
-	    printf("      CPF: ");
-	    scanf("%d", &CPF_Login);
+        limpar_tela();
+        gotoxy(10,2);
+        puts("LOGIN");
+        gotoxy(5,4);
+        puts("USUARIO: ");
+        gotoxy(5,5);
+        puts("SENHA: ");
+        gotoxy(14,4);
+        scanf("%d", &CPF_Login);
         getchar();
-	    printf("      SENHA: ");
+        gotoxy(13,5);
         scanf("%s", SENHA_Login);
-        getchar();
-        puts("");
-        puts("#####################################");
 
-        for (i = 0; i < MAX || retorno != 0; i++)
+        for (int i = 0; i < MAX || retorno != 0; i++)
         {
             if (usuarios[i].CPF == CPF_Login && strcmp(usuarios[i].senha, SENHA_Login) == 0)
-            {
                 retorno = 0;
-            }
         }
         if (retorno == 1)
         {
             limpar_tela();
-            puts("CPF e/ou senha invalidos!\nPor favor, tente novamente\n");
+            gotoxy(5,2);
+            puts("USUARIO OU SENHA INVALIDOS!");
+            gotoxy(5,3);
+            puts("POR FAVOR, TENTE NOVAMENTE");
+            pausar_tela(5,5);
         }
         
     } while (retorno != 0);
 
     limpar_tela();
-    puts("Login realizado com sucesso!\nBEM VINDO(A)!\n");
+    gotoxy(10,2);
+    puts("LOGIN REALIZADO COM SUCESSO");
+    gotoxy(10,3);
+    puts("BEM VINDO(A)!");
     perfil_Usuario(usuarios, CPF_Login);
-    puts("Pressione qualquer tecla para continuar...");
-    getchar();
     menu_Acoes(usuarios);
 }
 
@@ -81,22 +131,24 @@ void menu_Acoes(Usuario usuarios[])
     int opcao, opcao2;
     int CPF_usuario;
 
-    limpar_tela();
-
     do
-    {
-        puts("#####################################");
-	    puts("#                                   #");											   
-	    puts("#            SEBO ONLINE            #");				   
-	    puts("#                                   #");									   
-        puts("# ESCOLHA UMA ACAO:                 #");
-	    puts("# 1 - COMPRAR PRODUTO               #");
-	    puts("# 2 - ADICONAR PRODUTO              #");
-	    puts("# 3 - EXIBIR USUARIOS               #");
-	    puts("# 4 - EXIBIR PRODUTOS               #");
-	    puts("# 5 - SAIR                          #");
-	    puts("#                                   #");									   
-        puts("#####################################");
+    {	
+        limpar_tela();
+        gotoxy(10,2);
+	    puts("SEBO ONLINE");
+        gotoxy(5,4);
+        puts("ESCOLHA UMA ACAO:");
+        gotoxy(5,5);
+	    puts("1 - Comprar produto");
+        gotoxy(5,6);
+	    puts("2 - Adicionar produto");
+        gotoxy(5,7);
+	    puts("3 - Exibir usuarios");
+        gotoxy(5,8);
+	    puts("4 - Exibir produtos");
+        gotoxy(5,9);
+	    puts("5 - Sair");
+        gotoxy(5,11);
         printf("Opcao: ");
         scanf("%d", &opcao);
 
@@ -104,15 +156,15 @@ void menu_Acoes(Usuario usuarios[])
         {
         case 3:
             limpar_tela();
-            puts("#####################################");
-	        puts("#                                   #");											   
-	        puts("#            SEBO ONLINE            #");				   
-	        puts("#                                   #");									   
-            puts("# EXIBIR USUARIOS:                  #");
-	        puts("# 1 - LISTA DE USUARIOS             #");
-	        puts("# 2 - USUARIO PELO CPF              #");
-	        puts("#                                   #");									   
-            puts("#####################################");
+            gotoxy(10,2);
+	        puts("SEBO ONLINE");
+            gotoxy(5,4);
+            puts("EXIBIR USUARIOS:");
+            gotoxy(5,5);
+	        puts("1 - Lista de usuarios");
+            gotoxy(5,7);
+	        puts("2 - Usuario pelo CPF");
+            gotoxy(5,9);
             printf("Opcao: ");
             scanf("%d", &opcao2);
 
@@ -125,12 +177,10 @@ void menu_Acoes(Usuario usuarios[])
             
             case 2:
                 limpar_tela();
-                printf("Digite o CPF do usuario: ");
+                gotoxy(10,2);
+                puts("Digite o CPF do usuario: ");
                 scanf("%d", &CPF_usuario);
                 perfil_Usuario(usuarios, CPF_usuario);
-                getchar();
-                puts("Pressione qualquer tecla para continuar...");
-                getchar();
                 break;
 
             default:
@@ -200,23 +250,23 @@ void perfil_Usuario(Usuario usuarios[], int cpf)
     {
         if (usuarios[i].CPF == cpf)
         {
-            puts("-------------------------------------");
-            puts("");
-            printf("%s%20d\n", usuarios[i].nome, usuarios[i].qtde_de_pontos);
-            puts("");
+            limpar_tela();
+            gotoxy(5,5);
+            printf("%s", usuarios[i].nome);
+            gotoxy(30,5);
+            printf("%d", usuarios[i].qtde_de_pontos);
+            gotoxy(5,7);
             puts("Produtos:");
+            gotoxy(5,8);
             for (j = 0; j < 20; j++)
             {
                 if (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
-                {
                     printf("%s ", usuarios[i].produtos[j].nome);
-                }
             }
-            puts("\n");
-            puts("-------------------------------------");
-            puts("");
         }
     }
+
+    pausar_tela(5,10);
 }
 
 void exibir_produtos(Usuario usuarios[])
