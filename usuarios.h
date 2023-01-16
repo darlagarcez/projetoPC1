@@ -21,7 +21,7 @@ void adicionar_usuario(Usuario usuarios[]);
 // Funcoes de produtos do usuario
 void inicializacao_Produtos(Usuario usuarios[]);
 void finalizacao_Produtos(Usuario usuarios[]);
-void adicionar_Produto(Usuario usuarios[], int idUsuario);
-void remover_Produto(Usuario usuarios[], int idUsuario, int idProduto);
+void adicionar_Produto(Usuario usuarios[], char idUsuario[]);
+void remover_Produto(Usuario usuarios[], char idUsuario[], char idProduto[]);
 
 #endif

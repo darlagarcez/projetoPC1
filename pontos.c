@@ -19,12 +19,13 @@ float questionario()
     float nivel_de_qualidade;
     int pontos;
 
+    limpar_tela();
     printf("Quanto meses faz que o usuário comprou o produto? (Valor arrendondado)");
     scanf("%d", idade);
 
     for (int i = 0; i < 7; i++)
     {
-        printf("%s\n", perguntas_str[i]);
+        printf("\n%s", perguntas_str[i]);
         printf("1 - Sim\t2 - Nao\n");
         printf("Opcao: ");
         scanf("%f", perguntas[i]);

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "produtos.h"
 #include "usuarios.h"
+#include "pontos.h"
 #define MAX 10
 
 #ifdef _WIN32
@@ -17,22 +18,11 @@ void gotoxy(int x,int y);
 void pausar_tela(int x, int y);
 void inicializacao(Usuario usuarios[]);
 void menu_Login(Usuario usuarios[]);
-void menu_Acoes(Usuario usuarios[]);
+void menu_Acoes(Usuario usuarios[], char id[]);
 void exibir_Usuarios(Usuario usuarios[]);
 void perfil_Usuario(Usuario usuarios[], int cpf);
 void exibir_produtos(Usuario usuarios[]);
 void finalizacao(Usuario usuarios[]);
-
-void limpar_tela()
-{
-    #ifdef __linux__
-        system("clear");
-    #elif _WIN32
-        system("cls");
-    #else
-
-    #endif
-}
 
 void limpar_tela()
 {
@@ -84,6 +74,7 @@ void menu_Login(Usuario usuarios[])
     int CPF_Login;
     char SENHA_Login[20];
     int retorno = 1;
+    char id[6];
 
     do
     {
@@ -103,7 +94,10 @@ void menu_Login(Usuario usuarios[])
         for (int i = 0; i < MAX || retorno != 0; i++)
         {
             if (usuarios[i].CPF == CPF_Login && strcmp(usuarios[i].senha, SENHA_Login) == 0)
+            {
                 retorno = 0;
+                strcpy(id, usuarios[i].ID);
+            }
         }
         if (retorno == 1)
         {
@@ -123,13 +117,16 @@ void menu_Login(Usuario usuarios[])
     gotoxy(10,3);
     puts("BEM VINDO(A)!");
     perfil_Usuario(usuarios, CPF_Login);
-    menu_Acoes(usuarios);
+    
+    menu_Acoes(usuarios, id);
 }
 
-void menu_Acoes(Usuario usuarios[])
+void menu_Acoes(Usuario usuarios[], char id[])
 {
     int opcao, opcao2;
     int CPF_usuario;
+    float nivel_de_qualidade;
+    int quantidade_de_pontos;
 
     do
     {	
@@ -154,59 +151,63 @@ void menu_Acoes(Usuario usuarios[])
 
         switch (opcao)
         {
-        case 3:
-            limpar_tela();
-            gotoxy(10,2);
-	        puts("SEBO ONLINE");
-            gotoxy(5,4);
-            puts("EXIBIR USUARIOS:");
-            gotoxy(5,5);
-	        puts("1 - Lista de usuarios");
-            gotoxy(5,7);
-	        puts("2 - Usuario pelo CPF");
-            gotoxy(5,9);
-            printf("Opcao: ");
-            scanf("%d", &opcao2);
-
-            switch (opcao2)
-            {
-            case 1:
-                limpar_tela();
-                exibir_Usuarios(usuarios);
-                break;
-            
             case 2:
                 limpar_tela();
-                gotoxy(10,2);
-                puts("Digite o CPF do usuario: ");
-                scanf("%d", &CPF_usuario);
-                perfil_Usuario(usuarios, CPF_usuario);
-                break;
-
-            default:
+                adicionar_Produto(usuarios, id);
+                
+            case 3:
                 limpar_tela();
-                puts("Opcao invalida!");
-                getchar();
-                puts("Pressione qualquer tecla para continuar...");
-                getchar();
+                gotoxy(10,2);
+                puts("SEBO ONLINE");
+                gotoxy(5,4);
+                puts("EXIBIR USUARIOS:");
+                gotoxy(5,5);
+                puts("1 - Lista de usuarios");
+                gotoxy(5,7);
+                puts("2 - Usuario pelo CPF");
+                gotoxy(5,9);
+                printf("Opcao: ");
+                scanf("%d", &opcao2);
+
+                switch (opcao2)
+                {
+                case 1:
+                    limpar_tela();
+                    exibir_Usuarios(usuarios);
+                    break;
+                
+                case 2:
+                    limpar_tela();
+                    gotoxy(10,2);
+                    puts("Digite o CPF do usuario: ");
+                    scanf("%d", &CPF_usuario);
+                    perfil_Usuario(usuarios, CPF_usuario);
+                    break;
+
+                default:
+                    limpar_tela();
+                    puts("Opcao invalida!");
+                    getchar();
+                    puts("Pressione qualquer tecla para continuar...");
+                    getchar();
+                    break;
+                }
                 break;
-            }
-            break;
 
-        case 4:
-            limpar_tela();
-            exibir_produtos(usuarios);
-            limpar_tela();
-            break;
+            case 4:
+                limpar_tela();
+                exibir_produtos(usuarios);
+                limpar_tela();
+                break;
 
-        case 5:
-            limpar_tela();
-            puts("Programa finalizado!");
-            break;
-        
-        default:
-            puts("Opcao invalida!\nPor favor, digite novamente:\n");
-            break;
+            case 5:
+                limpar_tela();
+                puts("Programa finalizado!");
+                break;
+            
+            default:
+                puts("Opcao invalida!\nPor favor, digite novamente:\n");
+                break;
         }
     } while (opcao != 5);
 }

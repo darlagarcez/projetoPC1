@@ -44,7 +44,7 @@ int main()
             break;
 
         default:
-            retorno = 1
+            retorno = 1;
             limpar_tela();
             gotoxy(10,2);
             puts("OPCAO INVALIDA!");
