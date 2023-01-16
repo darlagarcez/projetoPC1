@@ -11,8 +11,8 @@ void finalizacao_Usuarios(Usuario usuarios[]);
 void inicializacao_Produtos(Usuario usuarios[]);
 void finalizacao_Produtos(Usuario usuarios[]);
 void adicionar_usuario(Usuario usuarios[]);
-void adicionar_Produto(Usuario usuarios[], int idUsuario);
-void remover_Produto(Usuario usuarios[], int idUsuario, int idProduto);
+void adicionar_Produto(Usuario usuarios[], char idUsuario[]);
+void remover_Produto(Usuario usuarios[], char idUsuario[], char idProduto[]);
 
 void inicializacao_Usuarios(Usuario usuarios[])
 {
@@ -195,23 +195,24 @@ void adicionar_usuario(Usuario usuarios[])
 
             if (i < 10)
             {
-                strcpy(id_aux, "00");
-                strcat(id_aux, (char)i);
+                strcpy(ID, "00");
+                sprintf(id_aux, "%d", i);
+                strcat(ID, id_aux);
             }
             else if (i >= 10 && i < 100)
             {
-                strcpy(id_aux, "0");
-                strcat(id_aux, (char)i);
+                strcpy(ID, "0");
+                sprintf(id_aux, "%d", i);
+                strcat(ID, id_aux);
             }
             else 
             {
-                strcpy(id_aux, (char)i);
+                sprintf(id_aux, "%d", i);
+                strcat(ID, id_aux);
             }
 
-            strcpy(ID, id_aux);
-
             strcpy(usuarios[i].nome, nome);
-            strcpy(usuarios[i].CPF, CPF);
+            usuarios[i].CPF = CPF;
             strcpy(usuarios[i].senha, senha);
             strcpy(usuarios[i].ID, ID);
 
@@ -220,9 +221,10 @@ void adicionar_usuario(Usuario usuarios[])
     }
 }
 
-void adicionar_Produto(Usuario usuarios[], int idUsuario)
+void adicionar_Produto(Usuario usuarios[], char idUsuario[])
 {
     int i, j;
+    char id_aux[3];
     char nome[50];
     char autor[50];
     int ano;
@@ -230,9 +232,7 @@ void adicionar_Produto(Usuario usuarios[], int idUsuario)
     int qtde_de_pontos;
     float nivel_de_qualidade;
 
-    char idProduto[3];
-
-    strcpy(ID, (char)idUsuario);
+    strcpy(ID, idUsuario);
 
     printf("Nome do livro: ");
     scanf("%s", nome);
@@ -257,17 +257,16 @@ void adicionar_Produto(Usuario usuarios[], int idUsuario)
 
             if (j < 10)
             {
-                strcpy(idProduto, "0");
-                strcat(idProduto, (char)j);
+                strcat(ID, "0");
+                sprintf(id_aux, "%d", j);
+                strcat(ID, id_aux);
             }
             else
             {
-                strcpy(idProduto, (char)j);
+                sprintf(id_aux, "%d", j);
+                strcat(ID, id_aux);
             }
 
-            strcat(idProduto, (char)j);
-            strcat(ID, idProduto);
-    
             strcpy(usuarios[i].produtos[j].ID, ID);
             strcpy(usuarios[i].produtos[j].nome, nome);
             strcpy(usuarios[i].produtos[j].autor, autor);
@@ -279,7 +278,7 @@ void adicionar_Produto(Usuario usuarios[], int idUsuario)
     }
 }
 
-void remover_Produto(Usuario usuarios[], int idUsuario, int idProduto)
+void remover_Produto(Usuario usuarios[], char idUsuario[], char idProduto[])
 {
     int i, j;
 
