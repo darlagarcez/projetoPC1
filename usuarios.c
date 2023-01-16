@@ -10,19 +10,20 @@ void inicializacao_Usuarios(Usuario usuarios[]);
 void finalizacao_Usuarios(Usuario usuarios[]);
 void inicializacao_Produtos(Usuario usuarios[]);
 void finalizacao_Produtos(Usuario usuarios[]);
-void adicionar_usuario(Usuario usuarios[]);
+void excluir_usuario(Usuario usuarios[], char idUsuario[]);
 void adicionar_Produto(Usuario usuarios[], char idUsuario[]);
+void comprar_produto(Usuario usuarios[], char idUsuario[], char idProduto[]);
 void remover_Produto(Usuario usuarios[], char idUsuario[], char idProduto[]);
 
 void inicializacao_Usuarios(Usuario usuarios[])
 {
     FILE *ponteiro_Arq;
-    int i;
 
-    for (i = 0; i < MAX; i++)
+    for (int i = 0; i < MAX; i++)
     {
         usuarios[i].CPF = 0;
         strcpy(usuarios[i].nome, "0");
+        strcpy(usuarios[i].sobrenome, "0");
         strcpy(usuarios[i].ID, "0");
         usuarios[i].qtde_de_pontos = 0;
         strcpy(usuarios[i].senha, "0");
@@ -31,11 +32,12 @@ void inicializacao_Usuarios(Usuario usuarios[])
     ponteiro_Arq = fopen("usuarios.txt", "r");
 
     // Passagem de dados do arquivo para o vetor de usuarios
-    for (i = 0; i < MAX; i++)
+    for (int i = 0; i < MAX; i++)
     {
         fscanf(ponteiro_Arq, "ID: %s\n", usuarios[i].ID);
         fscanf(ponteiro_Arq, "CPF: %d\n", &usuarios[i].CPF);
         fscanf(ponteiro_Arq, "Nome: %s\n", usuarios[i].nome);
+        fscanf(ponteiro_Arq, "Sobrenome: %s\n", usuarios[i].sobrenome);
         fscanf(ponteiro_Arq, "Senha: %s\n", usuarios[i].senha);
         fscanf(ponteiro_Arq, "Quantidade de pontos: %d\n", &usuarios[i].qtde_de_pontos);
     }
@@ -46,15 +48,14 @@ void inicializacao_Usuarios(Usuario usuarios[])
 void finalizacao_Usuarios(Usuario usuarios[])
 {
     FILE *ponteiro_Arq;
-    int i;
-
     ponteiro_Arq = fopen("usuarios.txt", "w");
 
-    for (i = 0; i < MAX; i++)
+    for (int i = 0; i < MAX; i++)
     {
         fprintf(ponteiro_Arq, "ID: %s\n", usuarios[i].ID);
         fprintf(ponteiro_Arq, "CPF: %d\n", usuarios[i].CPF);
         fprintf(ponteiro_Arq, "Nome: %s\n", usuarios[i].nome);
+        fprintf(ponteiro_Arq, "Sobrenome: %s\n", usuarios[i].sobrenome);
         fprintf(ponteiro_Arq, "Senha: %s\n", usuarios[i].senha);
         fprintf(ponteiro_Arq, "Quantidade de pontos: %d\n", usuarios[i].qtde_de_pontos);
 
@@ -67,11 +68,10 @@ void finalizacao_Usuarios(Usuario usuarios[])
 void inicializacao_Produtos(Usuario usuarios[])
 {
     FILE *ponteiro_Arq;
-    int i, j;
 
-    for (i = 0; i < MAX; i++)
+    for (int i = 0; i < MAX; i++)
     {
-        for (j = 0; j < 20; j++)
+        for (int j = 0; j < 20; j++)
         {
             strcpy(usuarios[i].produtos[j].ID, "0");
             strcpy(usuarios[i].produtos[j].nome, "0");
@@ -111,11 +111,11 @@ void inicializacao_Produtos(Usuario usuarios[])
         strncpy(id_usuario, id, 3);
         id_usuario[3] = '\0';
 
-        for (i = 0; i < MAX; i++)
+        for (int i = 0; i < MAX; i++)
         {
             if (strcmp(usuarios[i].ID, id_usuario) == 0)
             {
-                j = 0;
+                int j = 0;
 
                 while (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
                     j++;
@@ -126,7 +126,6 @@ void inicializacao_Produtos(Usuario usuarios[])
                 usuarios[i].produtos[j].ano = ano;
                 usuarios[i].produtos[j].qtde_de_pontos = qtde_de_pontos;
                 usuarios[i].produtos[j].nivel_de_qualidade = nivel_de_qualidade;
-                break;
             }
         }
 
@@ -139,13 +138,11 @@ void inicializacao_Produtos(Usuario usuarios[])
 void finalizacao_Produtos(Usuario usuarios[])
 {
     FILE *ponteiro_Arq;
-    int i, j;
-
     ponteiro_Arq = fopen("produtos.txt", "w");
 
-    for (i = 0; i < MAX; i++)
+    for (int i = 0; i < MAX; i++)
     {
-        for (j = 0; j < 20; j++)
+        for (int j = 0; j < 20; j++)
         {
             if (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
             {
@@ -170,60 +167,13 @@ void finalizacao_Produtos(Usuario usuarios[])
     fclose(ponteiro_Arq);
 }
 
-void adicionar_usuario(Usuario usuarios[])
+void excluir_usuario(Usuario usuarios[], char idUsuario[])
 {
-    int i;
-    char id_aux[4];
-    int CPF;
-    char nome[50];
-    char ID[4];
-    int qtde_de_pontos;
-    char senha[20];
 
-    for (i = 0; i < MAX; i++)
-    {
-        if (strcmp(usuarios[i].ID, "0") == 0)
-        {
-            printf("###########################");
-            printf("Nome do usuario: ");
-            scanf("%s", nome);
-            getchar();
-            printf("CPF do usuario: ");
-            scanf("%s", CPF);
-            printf("Senha do usuario: ");
-            scanf("%s", senha);
-
-            if (i < 10)
-            {
-                strcpy(ID, "00");
-                sprintf(id_aux, "%d", i);
-                strcat(ID, id_aux);
-            }
-            else if (i >= 10 && i < 100)
-            {
-                strcpy(ID, "0");
-                sprintf(id_aux, "%d", i);
-                strcat(ID, id_aux);
-            }
-            else 
-            {
-                sprintf(id_aux, "%d", i);
-                strcat(ID, id_aux);
-            }
-
-            strcpy(usuarios[i].nome, nome);
-            usuarios[i].CPF = CPF;
-            strcpy(usuarios[i].senha, senha);
-            strcpy(usuarios[i].ID, ID);
-
-            break;
-        }
-    }
 }
 
 void adicionar_Produto(Usuario usuarios[], char idUsuario[])
 {
-    int i, j;
     char id_aux[3];
     char nome[50];
     char autor[50];
@@ -246,11 +196,11 @@ void adicionar_Produto(Usuario usuarios[], char idUsuario[])
 
     qtde_de_pontos = calculo_pontos(nivel_de_qualidade);
 
-    for (i = 0; i < MAX; i++)
+    for (int i = 0; i < MAX; i++)
     {
         if (strcmp(usuarios[i].ID, idUsuario) == 0)
         {
-            j = 0;
+            int j = 0;
 
             while (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
                 j++;
@@ -278,15 +228,18 @@ void adicionar_Produto(Usuario usuarios[], char idUsuario[])
     }
 }
 
+void comprar_produto(Usuario usuarios[], char idUsuario[], char idProduto[])
+{
+
+}
+
 void remover_Produto(Usuario usuarios[], char idUsuario[], char idProduto[])
 {
-    int i, j;
-
-    for (i = 0; i < MAX; i++)
+    for (int i = 0; i < MAX; i++)
     {
         if (strcmp(usuarios[i].ID, idUsuario) == 0)
         {
-            j = 0;
+            int j = 0;
 
             while (strcmp(usuarios[i].produtos[j].ID, idProduto) != 0)
                 j++;
