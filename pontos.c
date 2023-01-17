@@ -12,7 +12,7 @@ float questionario()
 {
     int idade;
     float perguntas[7];
-    char perguntas_str[8][60] = {"O livro contém todas as páginas?", "O livro está com a lombada quebrada?",
+    char perguntas_str[7][60] = {"O livro contém todas as páginas?", "O livro está com a lombada quebrada?",
                                 "O livro contém alguma página riscada?", "O livro contém alguma página amassada?",
                                 "O livro contém algum dano visível?", "O livro contém algum dano por umidade (mofo, por exemplo)?",
                                 "O livro está com as páginas amareladas?"};
@@ -22,13 +22,15 @@ float questionario()
     limpar_tela();
     printf(" Quanto meses faz que o usuário comprou o produto? (Valor arrendondado) ");
     scanf("%d", idade);
+    getchar();
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 7; i++)
     {
         printf("\n %s\n", perguntas_str[i]);
         printf(" 1 - Sim\t2 - Nao\n");
         printf(" Opcao: ");
-        scanf("%f", perguntas[i]);
+        scanf("%f", &perguntas[i]);
+        getchar();
         if (i == 0)
         {
             if (perguntas[i] == 1.0)
@@ -47,11 +49,13 @@ float questionario()
         {
             if (perguntas[i] == 1.0)
                 perguntas[i] = 5.0;
-            else if (perguntas[i] == 2.0)
+            else if (perguntas[i] == 2.0) perguntas[i] = 1.0;
                 perguntas[i] = nivel_do_dano();
         }
     }
 
+    printf("metricas: %f, %f, %f, %f, %f, %f, %f", perguntas[0], perguntas[1], perguntas[2], perguntas[3], perguntas[4], perguntas[5], perguntas[6]);
+    
     nivel_de_qualidade = calculo_nivel_qualidade(perguntas, idade);
 
     return nivel_de_qualidade;
@@ -106,7 +110,8 @@ float nivel_do_dano()
     printf("De 1 à 5, defina o nivel do dano:\n");
     printf("1 - Muito pequeno\t2 - Pequeno\t3 - Medio\t4 - Grande\t5 - Muito grande\n");
     printf("Opcao: ");
-    scanf("%f", opcao);
+    scanf("%f", &opcao);
+    getchar();
 
     if (opcao == 1.0)
         return 4.0;

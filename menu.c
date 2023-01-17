@@ -243,6 +243,7 @@ void menu_Acoes(Usuario *usuarios, char id[])
 	    puts(" 6 - Sair\n");
         printf(" Opcao: ");
         scanf("%d", &opcao);
+        getchar();
 
         switch (opcao)
         {
@@ -266,6 +267,7 @@ void menu_Acoes(Usuario *usuarios, char id[])
                 puts(" 2 - Usuario pelo CPF\n");
                 printf(" Opcao: ");
                 scanf("%d", &opcao2);
+                getchar();
 
                 switch (opcao2)
                 {
@@ -277,6 +279,7 @@ void menu_Acoes(Usuario *usuarios, char id[])
                         puts(" 2 - Nao\n");
                         printf(" Opcao: ");
                         scanf("%d", &opcao3);
+                        getchar();
 
                         if (opcao3 == 1)
                         {
@@ -315,6 +318,7 @@ void menu_Acoes(Usuario *usuarios, char id[])
                 puts(" 2 - Nao\n");
                 printf(" Opcao: ");
                 scanf("%d", &opcao3);
+                getchar();
 
                 if (opcao3 == 1)
                 {
@@ -338,6 +342,7 @@ void menu_Acoes(Usuario *usuarios, char id[])
                 puts(" 2 - Nao\n");
                 printf(" Opcao: ");
                 scanf("%d", &opcao3);
+                getchar();
 
                 if (opcao3 == 1)
                 {

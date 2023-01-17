@@ -40,8 +40,8 @@ void gotoxy(int x,int y)
         printf("%c[%d;%df",0x1B,y,x);
     #elif _WIN32
         COORD coord;
-        coord.X = x;
-        coord.Y = y;
+        coord.X = x - 1;
+        coord.Y = y - 1;
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
     #elif _WIN64
         COORD coord;
