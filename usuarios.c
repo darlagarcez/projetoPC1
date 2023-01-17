@@ -187,7 +187,7 @@ void adicionar_Produto(Usuario *usuarios, char idUsuario[])
 
     strcpy(ID, idUsuario);
 
-    getchar();
+    // getchar();
     printf("Nome do livro: ");
     scanf("%[^\n]s", nome);
     getchar();
