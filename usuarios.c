@@ -6,22 +6,23 @@
 #include "pontos.h"
 #define MAX 10
 
-void inicializacao_Usuarios(Usuario usuarios[]);
-void finalizacao_Usuarios(Usuario usuarios[]);
-void inicializacao_Produtos(Usuario usuarios[]);
-void finalizacao_Produtos(Usuario usuarios[]);
-void excluir_usuario(Usuario usuarios[], char idUsuario[]);
-void adicionar_Produto(Usuario usuarios[], char idUsuario[]);
-void comprar_produto(Usuario usuarios[], char idUsuario[], char idProduto[]);
-void remover_Produto(Usuario usuarios[], char idUsuario[], char idProduto[]);
+void inicializacao_Usuarios(Usuario *usuarios);
+void finalizacao_Usuarios(Usuario *usuarios);
+void inicializacao_Produtos(Usuario *usuarios);
+void finalizacao_Produtos(Usuario *usuarios);
+void excluir_usuario(Usuario *usuarios, char idUsuario[]);
+void adicionar_Produto(Usuario *usuarios, char idUsuario[]);
+void comprar_produto(Usuario *usuarios, char idUsuario[], char idProduto[]);
+void remover_Produto(Usuario *usuarios, char idUsuario[], char idProduto[]);
 
-void inicializacao_Usuarios(Usuario usuarios[])
+void inicializacao_Usuarios(Usuario *usuarios)
 {
     FILE *ponteiro_Arq;
 
+    puts("chegou aqui\n");
     for (int i = 0; i < MAX; i++)
     {
-        usuarios[i].CPF = 0;
+        strcpy(usuarios[i].CPF, "0");
         strcpy(usuarios[i].nome, "0");
         strcpy(usuarios[i].sobrenome, "0");
         strcpy(usuarios[i].ID, "0");
@@ -29,23 +30,25 @@ void inicializacao_Usuarios(Usuario usuarios[])
         strcpy(usuarios[i].senha, "0");
     }
 
+    puts("chegou aqui\n");
     ponteiro_Arq = fopen("usuarios.txt", "r");
 
     // Passagem de dados do arquivo para o vetor de usuarios
     for (int i = 0; i < MAX; i++)
     {
         fscanf(ponteiro_Arq, "ID: %s\n", usuarios[i].ID);
-        fscanf(ponteiro_Arq, "CPF: %d\n", &usuarios[i].CPF);
+        fscanf(ponteiro_Arq, "CPF: %s\n", usuarios[i].CPF);
         fscanf(ponteiro_Arq, "Nome: %s\n", usuarios[i].nome);
         fscanf(ponteiro_Arq, "Sobrenome: %s\n", usuarios[i].sobrenome);
         fscanf(ponteiro_Arq, "Senha: %s\n", usuarios[i].senha);
         fscanf(ponteiro_Arq, "Quantidade de pontos: %d\n", &usuarios[i].qtde_de_pontos);
     }
 
+    puts("chegou aqui\n");
     fclose(ponteiro_Arq);
 }
 
-void finalizacao_Usuarios(Usuario usuarios[])
+void finalizacao_Usuarios(Usuario *usuarios)
 {
     FILE *ponteiro_Arq;
     ponteiro_Arq = fopen("usuarios.txt", "w");
@@ -53,7 +56,7 @@ void finalizacao_Usuarios(Usuario usuarios[])
     for (int i = 0; i < MAX; i++)
     {
         fprintf(ponteiro_Arq, "ID: %s\n", usuarios[i].ID);
-        fprintf(ponteiro_Arq, "CPF: %d\n", usuarios[i].CPF);
+        fprintf(ponteiro_Arq, "CPF: %s\n", usuarios[i].CPF);
         fprintf(ponteiro_Arq, "Nome: %s\n", usuarios[i].nome);
         fprintf(ponteiro_Arq, "Sobrenome: %s\n", usuarios[i].sobrenome);
         fprintf(ponteiro_Arq, "Senha: %s\n", usuarios[i].senha);
@@ -65,7 +68,7 @@ void finalizacao_Usuarios(Usuario usuarios[])
     fclose(ponteiro_Arq);
 }
 
-void inicializacao_Produtos(Usuario usuarios[])
+void inicializacao_Produtos(Usuario *usuarios)
 {
     FILE *ponteiro_Arq;
 
@@ -135,7 +138,7 @@ void inicializacao_Produtos(Usuario usuarios[])
     fclose(ponteiro_Arq);
 }
 
-void finalizacao_Produtos(Usuario usuarios[])
+void finalizacao_Produtos(Usuario *usuarios)
 {
     FILE *ponteiro_Arq;
     ponteiro_Arq = fopen("produtos.txt", "w");
@@ -167,12 +170,12 @@ void finalizacao_Produtos(Usuario usuarios[])
     fclose(ponteiro_Arq);
 }
 
-void excluir_usuario(Usuario usuarios[], char idUsuario[])
+void excluir_usuario(Usuario *usuarios, char idUsuario[])
 {
 
 }
 
-void adicionar_Produto(Usuario usuarios[], char idUsuario[])
+void adicionar_Produto(Usuario *usuarios, char idUsuario[])
 {
     char id_aux[3];
     char nome[50];
@@ -184,11 +187,12 @@ void adicionar_Produto(Usuario usuarios[], char idUsuario[])
 
     strcpy(ID, idUsuario);
 
+    getchar();
     printf("Nome do livro: ");
-    scanf("%s", nome);
+    scanf("%[^\n]s", nome);
     getchar();
     printf("Autor do livro: ");
-    scanf("%s", autor);
+    scanf("%[^\n]s", autor);
     printf("Ano do lancamento do livro: ");
     scanf("%d", &ano);
 
@@ -228,12 +232,12 @@ void adicionar_Produto(Usuario usuarios[], char idUsuario[])
     }
 }
 
-void comprar_produto(Usuario usuarios[], char idUsuario[], char idProduto[])
+void comprar_produto(Usuario *usuarios, char idUsuario[], char idProduto[])
 {
 
 }
 
-void remover_Produto(Usuario usuarios[], char idUsuario[], char idProduto[])
+void remover_Produto(Usuario *usuarios, char idUsuario[], char idProduto[])
 {
     for (int i = 0; i < MAX; i++)
     {

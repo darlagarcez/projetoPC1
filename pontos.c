@@ -20,14 +20,14 @@ float questionario()
     int pontos;
 
     limpar_tela();
-    printf("Quanto meses faz que o usuário comprou o produto? (Valor arrendondado)");
+    printf(" Quanto meses faz que o usuário comprou o produto? (Valor arrendondado) ");
     scanf("%d", idade);
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 8; i++)
     {
-        printf("\n%s", perguntas_str[i]);
-        printf("1 - Sim\t2 - Nao\n");
-        printf("Opcao: ");
+        printf("\n %s\n", perguntas_str[i]);
+        printf(" 1 - Sim\t2 - Nao\n");
+        printf(" Opcao: ");
         scanf("%f", perguntas[i]);
         if (i == 0)
         {

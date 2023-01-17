@@ -3,16 +3,14 @@
 
 #include "usuarios.h"
 
-void limpar_tela();
-void limpar_tela();
-void gotoxy(int x,int y);
-void pausar_tela(int x, int y);
-void inicializacao(Usuario usuarios[]);
-void menu_Login(Usuario usuarios[]);
-void menu_cadastro(Usuario usuarios[]);
-void menu_Acoes(Usuario usuarios[], char id[]);
-void exibir_Usuarios(Usuario usuarios[]);
-void perfil_Usuario(Usuario usuarios[], char CPF[]);
-void finalizacao(Usuario usuarios[]);
+void inicializacao(Usuario *usuarios);
+void menu_inicio(Usuario *usuarios);
+void menu_Login(Usuario *usuarios);
+void menu_cadastro(Usuario *usuarios);
+void menu_Acoes(Usuario *usuarios, char id[]);
+void exibir_Usuarios(Usuario *usuarios, char ID[]);
+void perfil_Usuario(Usuario *usuarios, char ID[]);
+void exibir_produtos(Usuario *usuarios);
+void finalizacao(Usuario *usuarios);
 
 #endif

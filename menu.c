@@ -1,61 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "produtos.h"
 #include "usuarios.h"
+#include "funcoesmatematicas.h"
 #include "pontos.h"
 #define MAX 10
 
-#ifdef _WIN32
-    #include <windows.h>
-#else
-
-#endif
-
-void limpar_tela();
-void gotoxy(int x,int y);
-void pausar_tela(int x, int y);
-void inicializacao(Usuario usuarios[]);
-void menu_inicio(Usuario usuarios[]);
-void menu_Login(Usuario usuarios[]);
-void menu_cadastro(Usuario usuarios[]);
-void menu_Acoes(Usuario usuarios[], char id[]);
-void exibir_Usuarios(Usuario usuarios[]);
-void perfil_Usuario(Usuario usuarios[], char CPF[]);
-void exibir_produtos(Usuario usuarios[]);
-void finalizacao(Usuario usuarios[]);
-
-void limpar_tela()
-{
-    #ifdef __linux__
-        system("clear");
-    #elif _WIN32
-        system("cls");
-    #elif _WIN64
-        system("cls");
-    #else
-
-    #endif
-}
-
-void gotoxy(int x,int y)
-{
-    #ifdef __linux__
-        printf("%c[%d;%df",0x1B,y,x);
-    #elif _WIN32
-        COORD coord;
-        coord.X = x;
-        coord.Y = y;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-    #elif _WIN64
-        COORD coord;
-        coord.X = x;
-        coord.Y = y;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-    #else
-
-    #endif
-}
+void inicializacao(Usuario *usuarios);
+void menu_inicio(Usuario *usuarios);
+void menu_Login(Usuario *usuarios);
+void menu_cadastro(Usuario *usuarios);
+void menu_Acoes(Usuario *usuarios, char id[]);
+void exibir_Usuarios(Usuario *usuarios, char ID[]);
+void perfil_Usuario(Usuario *usuarios, char ID[]);
+void exibir_produtos(Usuario *usuarios);
+void finalizacao(Usuario *usuarios);
 
 
         /*getchar();
@@ -63,14 +24,17 @@ void gotoxy(int x,int y)
         getchar();*/
 
 
-void inicializacao(Usuario usuarios[])
+void inicializacao(Usuario *usuarios)
 {
     inicializacao_Usuarios(usuarios);
     inicializacao_Produtos(usuarios);
 }
 
-void menu_inicio(Usuario usuarios[])
+void menu_inicio(Usuario *usuarios)
 {
+    int opcao;
+    int retorno = -1;
+
     do
     {
         limpar_tela();
@@ -82,38 +46,37 @@ void menu_inicio(Usuario usuarios[])
 
         switch (opcao)
         {
-        case 1:
-            retorno = 0;
-            limpar_tela();
-            menu_Login(usuarios);
-            break;
+            case 1:
+                retorno = 0;
+                limpar_tela();
+                menu_Login(usuarios);
+                break;
 
-        case 2:
-            retorno = 0;
-            limpar_tela();
-            adicionar_usuario(usuarios);
-            break;
+            case 2:
+                retorno = 0;
+                limpar_tela();
+                menu_cadastro(usuarios);
+                break;
 
-        default:
-            retorno = 1;
-            limpar_tela();
-            gotoxy(10,2);
-            puts("OPCAO INVALIDA!");
-            pausar_tela(5,4);
-            break;
+            default:
+                retorno = 1;
+                limpar_tela();
+                puts(" OPCAO INVALIDA!");
+                sleep(1);
+                break;
         }
     } while (retorno != 0);
 }
 
-void menu_Login(Usuario usuarios[])
+void menu_Login(Usuario *usuarios)
 {
     char CPF_Login[15];
     char SENHA_Login[20];
     char id[6];
+    int retorno = 1;
 
     do
     {
-        int retorno = 1;
         int cpf_valido;
 
         limpar_tela();
@@ -162,15 +125,15 @@ void menu_Login(Usuario usuarios[])
     limpar_tela();
     puts(" LOGIN REALIZADO COM SUCESSO");
     puts(" BEM VINDO(A)!\n");
-    perfil_Usuario(usuarios, ID);
+    perfil_Usuario(usuarios, id);
     sleep(3);
 
     menu_Acoes(usuarios, id);
 }
 
-void menu_cadastro(Usuario usuarios[])
+void menu_cadastro(Usuario *usuarios)
 {
-    int CPF;
+    char CPF[15];
     char nome[20];
     char sobrenome[20];
     char ID[4];
@@ -181,7 +144,7 @@ void menu_cadastro(Usuario usuarios[])
     puts(" CADASTRO\n");
     puts(" PRIMEIRO NOME: ");
     puts(" ULTIMO NOME: ");
-    puts(" CPF: ")
+    puts(" CPF: ");
     printf(" SENHA: ");
     gotoxy(16,3);
     scanf("%s", nome);
@@ -261,7 +224,7 @@ void menu_cadastro(Usuario usuarios[])
     }
 }
 
-void menu_Acoes(Usuario usuarios[], char id[])
+void menu_Acoes(Usuario *usuarios, char id[])
 {
     int opcao, opcao2, opcao3;
     char CPF_usuario[15];
@@ -276,7 +239,7 @@ void menu_Acoes(Usuario usuarios[], char id[])
 	    puts(" 2 - Adicionar produto");
 	    puts(" 3 - Exibir usuarios");
 	    puts(" 4 - Exibir produtos");
-        puts(" 5 - Excluir conta")
+        puts(" 5 - Excluir conta");
 	    puts(" 6 - Sair\n");
         printf(" Opcao: ");
         scanf("%d", &opcao);
@@ -308,7 +271,7 @@ void menu_Acoes(Usuario usuarios[], char id[])
                 {
                     case 1:
                         limpar_tela();
-                        exibir_Usuarios(usuarios);
+                        exibir_Usuarios(usuarios, id);
                         puts(" DESEJA COMPRAR ALGUM PRODUTO?\n");
                         puts(" 1 - Sim");
                         puts(" 2 - Nao\n");
@@ -369,7 +332,7 @@ void menu_Acoes(Usuario usuarios[], char id[])
 
             case 5:
                 limpar_tela();
-                exibir_Usuarios(usuarios);
+                exibir_Usuarios(usuarios, id);
                 puts(" DESEJA EXCLUIR A CONTA?\n");
                 puts(" 1 - Sim");
                 puts(" 2 - Nao\n");
@@ -410,19 +373,16 @@ void menu_Acoes(Usuario usuarios[], char id[])
     } while (opcao != 5);
 }
 
-void exibir_Usuarios(Usuario usuarios[], char ID[])
+void exibir_Usuarios(Usuario *usuarios, char ID[])
 {
-    int i, j;
-
-    for (i = 0; i < MAX; i++)
+    for (int i = 0; i < MAX; i++)
     {
-        if (usuarios[i].CPF != 0)
+        if (strcmp(usuarios[i].ID, "0") != 0)
         {
-            limpar_tela();
-            printf(" %s%c#%s", usuarios[i].nome, usuarios[i].sobrenome[0], usuario[i].ID);
+            printf(" %s%c#%-10s", usuarios[i].nome, usuarios[i].sobrenome[0], usuarios[i].ID);
             printf("%d\n", usuarios[i].qtde_de_pontos);
-            puts("        PRODUTOS\n");
-            for (j = 0; j < 20; j++)
+            puts("\n        PRODUTOS\n");
+            for (int j = 0; j < 20; j++)
             {
                 if (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
                 {
@@ -430,23 +390,21 @@ void exibir_Usuarios(Usuario usuarios[], char ID[])
                     printf(" PONTOS: %-5d ID: %-5s\n", usuarios[i].produtos[j].qtde_de_pontos, usuarios[i].produtos[j].ID);
                 }
             }
+            puts("");
         }
     }
 }
 
-void perfil_Usuario(Usuario usuarios[], char CPF[])
+void perfil_Usuario(Usuario *usuarios, char ID[])
 {
-    int i, j;
-
-    for (i = 0; i < MAX; i++)
+    for (int i = 0; i < MAX; i++)
     {
-        if (strcmp(usuarios[i].CPF, CPF) == 0)
+        if (strcmp(usuarios[i].ID, ID) == 0)
         {
-            limpar_tela();
-            printf(" %s%c#%s", usuarios[i].nome, usuarios[i].sobrenome[0], usuario[i].ID);
+            printf(" %s%c#%-10s", usuarios[i].nome, usuarios[i].sobrenome[0], usuarios[i].ID);
             printf("%d\n", usuarios[i].qtde_de_pontos);
-            puts("        PRODUTOS\n");
-            for (j = 0; j < 20; j++)
+            puts("\n        PRODUTOS\n");
+            for (int j = 0; j < 20; j++)
             {
                 if (strcmp(usuarios[i].produtos[j].ID, "0") != 0)
                 {
@@ -454,11 +412,12 @@ void perfil_Usuario(Usuario usuarios[], char CPF[])
                     printf(" PONTOS: %-10d ID: %-5s\n", usuarios[i].produtos[j].qtde_de_pontos, usuarios[i].produtos[j].ID);
                 }
             }
+            puts("");
         }
     }
 }
 
-void exibir_produtos(Usuario usuarios[])
+void exibir_produtos(Usuario *usuarios)
 {
     int i, j;
 
@@ -473,14 +432,14 @@ void exibir_produtos(Usuario usuarios[])
                 {
                     printf(" TITULO: %-50s PONTOS: %-5d\n", usuarios[i].produtos[j].nome, usuarios[i].produtos[j].qtde_de_pontos);
                     printf(" AUTOR: %-51s  ID: %-5s\n", usuarios[i].produtos[j].autor, usuarios[i].produtos[j].ID);
-                    printf(" PROPRIETARIO: %s%c#%s\n\n", usuarios[i].nome, usuarios[i].sobrenome[0], usuario[i].ID)
+                    printf(" PROPRIETARIO: %s%c#%s\n\n", usuarios[i].nome, usuarios[i].sobrenome[0], usuarios[i].ID);
                 }
             }
         }
     }
 }
 
-void finalizacao(Usuario usuarios[])
+void finalizacao(Usuario *usuarios)
 {   
     finalizacao_Usuarios(usuarios);
     finalizacao_Produtos(usuarios);
