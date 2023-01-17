@@ -3,6 +3,9 @@
 
 #include "produtos.h"
 
+// BIBLIOTECA PARA MANIPULACAO DE USUARIOS E PRODUTOS
+
+// Estrutura de usuarios
 typedef struct usuario
 {
     char CPF[15];

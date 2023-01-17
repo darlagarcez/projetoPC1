@@ -1,6 +1,8 @@
 #ifndef FUNCOESMATEMATICAS_H
 #define FUNCOESMATEMATICAS_H
 
+// BIBLIOTECA PARA FUNCOES MATEMATICAS E DE TELA
+
 void limpar_tela();
 void gotoxy(int x,int y);
 int validarcpf(char c_pf[]);

@@ -3,11 +3,16 @@
 #include <string.h>
 #include "funcoesmatematicas.h"
 
+// DECLARACAO DE FUNCOES
+
 float questionario();
 float calculo_nivel_qualidade(float notas[7], int idade);
 int calculo_pontos(float nivel_de_qualidade);
 float nivel_do_dano();
 
+// FIM DAS DECLARACOES
+
+// Funcao que realiza o questionario
 float questionario()
 {
     int idade;
@@ -21,7 +26,7 @@ float questionario()
 
     limpar_tela();
     printf(" Quanto meses faz que o usuário comprou o produto? (Valor arrendondado) ");
-    scanf("%d", idade);
+    scanf("%d", &idade);
     getchar();
 
     for (int i = 0; i < 7; i++)
@@ -47,14 +52,12 @@ float questionario()
         }
         else
         {
-            if (perguntas[i] == 1.0)
+            if (perguntas[i] == 2.0)
                 perguntas[i] = 5.0;
-            else if (perguntas[i] == 2.0) perguntas[i] = 1.0;
+            else if (perguntas[i] == 1.0)
                 perguntas[i] = nivel_do_dano();
         }
     }
-
-    printf("metricas: %f, %f, %f, %f, %f, %f, %f", perguntas[0], perguntas[1], perguntas[2], perguntas[3], perguntas[4], perguntas[5], perguntas[6]);
     
     nivel_de_qualidade = calculo_nivel_qualidade(perguntas, idade);
 
@@ -62,6 +65,7 @@ float questionario()
 
 }
 
+// Funcao que calcula o nivel de qualidade do livro
 float calculo_nivel_qualidade(float notas[7], int idade)
 {
     float pesos[7] = {1, 1, 2, 2, 1, 1, 2};
@@ -80,11 +84,12 @@ float calculo_nivel_qualidade(float notas[7], int idade)
 
     media = mediap(notas, pesos, 7);
 
-    media = media + (float) idade;
+    media = soma(media, (float) idade);
 
-    return (media / 2);
+    return divisao(media, 2);
 }
 
+// Funcao que calcula a quantidade de pontos do livro
 int calculo_pontos(float nivel_de_qualidade)
 {
     int pontos;
@@ -103,13 +108,14 @@ int calculo_pontos(float nivel_de_qualidade)
     return pontos;
 }
 
+// Funcao para definir o nivel do dano
 float nivel_do_dano()
 {
     float opcao;
 
-    printf("De 1 à 5, defina o nivel do dano:\n");
-    printf("1 - Muito pequeno\t2 - Pequeno\t3 - Medio\t4 - Grande\t5 - Muito grande\n");
-    printf("Opcao: ");
+    printf("\n  De 1 à 5, defina o nivel do dano:\n");
+    printf("  1 - Muito pequeno\t2 - Pequeno\t3 - Medio\t4 - Grande\t5 - Muito grande\n");
+    printf("  Opcao: ");
     scanf("%f", &opcao);
     getchar();
 

@@ -1,4 +1,3 @@
-14502,livro 2,autor 2,2022,68,4.8
-14503,livro 3,autor 3,2022,50,3.8
-12301,livro 1,autor 1,2021,87,4.1
-12302,livro 2,autor 2,2019,96,5.1
+14502,Diario de Anne Frank,Anne Frank,1947,95,4.2
+12302,League of Legends: Reinos de Runeterra,Riot Games,2020,95,4.4
+00200,As Cronicas de Narnia,C. S. Lewis,2005,95,4.0

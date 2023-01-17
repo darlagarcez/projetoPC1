@@ -3,6 +3,8 @@
 
 #include "usuarios.h"
 
+// BIBLIOTECA PARA EXIBICAO DE MENUS
+
 void inicializacao(Usuario *usuarios);
 void menu_inicio(Usuario *usuarios);
 void menu_Login(Usuario *usuarios);

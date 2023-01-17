@@ -11,6 +11,8 @@
 
 #endif
 
+// DECLARACAO DE FUNCOES
+
 void limpar_tela();
 void gotoxy(int x, int y);
 int validarcpf(char c_pf[]);
@@ -20,6 +22,9 @@ float subtracao(float x, float y);
 float produto(float x, float y);
 float divisao(float x, float y);
 
+// FIM DAS DECLARACOES
+
+// Funcao para limpar a tela
 void limpar_tela()
 {
     #ifdef __linux__
@@ -33,6 +38,7 @@ void limpar_tela()
     #endif
 }
 
+// Funcao para posicionar o cursor na tela
 void gotoxy(int x, int y)
 {
     #ifdef __linux__
@@ -52,6 +58,7 @@ void gotoxy(int x, int y)
     #endif
 }
 
+// Funcao para validar o CPF
 int validarcpf(char c_pf[])
 {
     int i = 0;
@@ -94,26 +101,40 @@ int validarcpf(char c_pf[])
         return 1;
 }
 
+// Funcao para calcular a media ponderada
 float mediap(float notas[],float pesos[], int tam)
 {
+    float media = 0.0;
+    float soma_pesos = 0.0;
 
+    for (int i = 0; i < tam; i++)
+    {
+        media = soma(media, produto(notas[i], pesos[i]));
+        soma_pesos = soma(soma_pesos, pesos[i]);
+    }
+
+    return divisao(media, soma_pesos);
 }
 
+// Funcao para somar dois numeros
 float soma(float x, float y)
 {
     return (x + y);
 }
 
+// Funcao para subtrair dois numeros
 float subtracao(float x, float y)
 {
     return (x - y);
 }
 
+// Funcao para multiplicar dois numeros
 float produto(float x, float y)
 {
     return (x * y);
 }
 
+// Funcao para dividir dois numeros
 float divisao(float x, float y)
 {
     return (x / y);
