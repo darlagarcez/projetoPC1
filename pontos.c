@@ -12,10 +12,10 @@ float questionario()
 {
     int idade;
     float perguntas[7];
-    char perguntas_str[7][60] = {"O livro contém todas as páginas?", "O livro está com a lombada quebrada?",
-                                "O livro contém alguma página riscada?", "O livro contém alguma página amassada?",
-                                "O livro contém algum dano visível?", "O livro contém algum dano por umidade (mofo, por exemplo)?",
-                                "O livro está com as páginas amareladas?"};
+    char perguntas_str[7][60] = {"O livro contem todas as paginas?", "O livro esta com a lombada quebrada?",
+                                "O livro contem alguma pagina riscada?", "O livro contem alguma pagina amassada?",
+                                "O livro contem algum dano visivel?", "O livro contem algum dano por umidade (mofo, por exemplo)?",
+                                "O livro esta com as paginas amareladas?"};
     float nivel_de_qualidade;
     int pontos;
 

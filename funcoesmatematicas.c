@@ -12,14 +12,13 @@
 #endif
 
 void limpar_tela();
-void gotoxy(int x,int y);
+void gotoxy(int x, int y);
 int validarcpf(char c_pf[]);
 float mediap(float notas[],float pesos[], int tam);
 float soma(float x, float y);
 float subtracao(float x, float y);
 float produto(float x, float y);
 float divisao(float x, float y);
-
 
 void limpar_tela()
 {
@@ -34,7 +33,7 @@ void limpar_tela()
     #endif
 }
 
-void gotoxy(int x,int y)
+void gotoxy(int x, int y)
 {
     #ifdef __linux__
         printf("%c[%d;%df",0x1B,y,x);
@@ -46,7 +45,7 @@ void gotoxy(int x,int y)
     #elif _WIN64
         COORD coord;
         coord.X = x;
-        coord.Y = y;
+        coord.Y = y - 1;
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
     #else
 
